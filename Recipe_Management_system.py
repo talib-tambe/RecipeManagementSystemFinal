@@ -91,3 +91,67 @@ class RecipeManager:
         else:
             raise Exception("Choice Doesnt Exist")
         return self.filtered_list
+
+    def add_recipe(self):
+
+        random_id = random.randint(0, 500)
+        while True:
+            if random_id not in self.id:
+                self.id.append(random_id)
+                break
+            random_id = random.randint(0, 500)
+
+        name = input("Enter recipe name: ").lower()
+        ingredients = input(
+            "Enter the ingredients (with space after one another, no commas): ").lower()
+        instructions = input(
+            "Enter the instructions (with space after one another (numbered steps), no commas): ").lower()
+        category = input("Enter recipe category: ").lower()
+        rating = input("Enter recipe rating (1-5): ").lower()
+        print("\n")
+
+        if int(rating) < 1 or int(rating) > 5:
+            raise Exception("Ratings must be between 1 and 5")
+
+        if name == "" or ingredients == "" or instructions == "" or category == "" or rating == "":
+            raise Exception("One of the entries are empty/missing")
+
+        recipe = Recipe(random_id, name, ingredients,
+                        instructions, category, rating)
+        self.recipes.append(recipe)
+        return True
+
+    def edit_recipe(self):
+
+        if len(self.recipes) == 0:
+            raise Exception("Recipe list empty!")
+
+        print("The list of recipes are:")
+        self.view_recipe_list(self.recipes)
+        print("\n")
+        recipe_id = input(
+            "Please enter the recipe id to which you want to modify: ")
+        recipe = None
+        recipe_index = None
+
+        for item in self.recipes:
+            if int(item.id) == int(recipe_id):
+                recipe = item
+                recipe_index = self.recipes.index(recipe)
+
+        if recipe is None:
+            raise Exception("Recipe doesnt exist")
+
+        name = input("Enter recipe name: ").lower()
+        ingredients = input(
+            "Enter the ingredients (with space after one another): ").lower()
+        instructions = input(
+            "Enter the instructions (with space after one another): ").lower()
+        category = input("Enter recipe category: ").lower()
+        rating = input("Enter recipe rating (1-5): ").lower()
+
+        updated_recipe = Recipe(
+            item.id, name, ingredients, instructions, category, rating)
+        self.recipes.append(updated_recipe)
+        del self.recipes[recipe_index]
+        return True
