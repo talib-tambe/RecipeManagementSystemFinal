@@ -155,3 +155,35 @@ class RecipeManager:
         self.recipes.append(updated_recipe)
         del self.recipes[recipe_index]
         return True
+
+ def delete_recipe(self):
+
+        if len(self.recipes) == 0:
+            raise Exception("Recipe list empty!")
+
+        print("The list of recipes are:")
+        self.view_recipe_list(self.recipes)
+        print("\n")
+        recipe_id = input(
+            "Please enter the recipe id to which you want to delete: ")
+        recipe = None
+        recipe_index = None
+
+        for item in self.recipes:
+            if int(item.id) == int(recipe_id):
+                recipe = item
+                recipe_index = self.recipes.index(recipe)
+        if recipe is None:
+            raise Exception("Recipe doesnt exist")
+        del self.recipes[recipe_index]
+        return True
+
+    def export_data(self, file_format='csv'):
+        if file_format == 'csv':
+            with open('new_recipes.csv', 'w', newline='') as f:
+                f.write('id,name,ingredients,instructions,category,rating\n')
+                for recipe in self.recipes:
+                    f.write(str(recipe.id)+","+recipe.name+","+recipe.ingredients+"," +
+                            recipe.instructions+","+recipe.category+","+str(recipe.rating)+"\n")
+        else:
+            raise Exception("Only CSV files are supported")
