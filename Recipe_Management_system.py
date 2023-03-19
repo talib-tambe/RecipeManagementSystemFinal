@@ -187,3 +187,56 @@ class RecipeManager:
                             recipe.instructions+","+recipe.category+","+str(recipe.rating)+"\n")
         else:
             raise Exception("Only CSV files are supported")
+    
+    def import_data(self, file_path):
+        with open(file_path) as f:
+            if file_path.endswith('.csv'):
+                next(f)
+                for line in f:
+                    line = line.strip("\n")
+                    alist = line.split(",")
+                    new_recipe = Recipe(
+                        alist[0], alist[1], alist[2], alist[3], alist[4], alist[5])
+                    self.recipes.append(new_recipe)
+
+            else:
+                raise Exception("Only CSV files are supported")
+
+    def display_menu(self):
+        while True:
+            print("Recipe Manager Menu")
+            print("1. View recipes")
+            print("2. Add recipe")
+            print("3. Edit recipe")
+            print("4. Delete recipe")
+            print("5. Export receipes")
+            print("6. Import receipes")
+            print("7. Exit")
+            choice = input("Enter your choice (1-7): ")
+
+            if choice == "1":
+                self.view_recipe()
+            elif choice == "2":
+                self.add_recipe()
+            elif choice == "3":
+                self.edit_recipe()
+            elif choice == "4":
+                self.delete_recipe()
+            elif choice == "5":
+                self.export_data()
+            elif choice == "6":
+                file_path = input("Enter file path: ")
+                self.import_data(file_path)
+            elif choice == "7":
+                self.exit_program()
+            else:
+                print("Invalid choice. Please try again.")
+
+    def exit_program(self):
+        print("Exiting Recipe Manager. Goodbye!")
+        exit()
+
+
+if __name__ == '__main__':
+    manager = RecipeManager()
+    manager.display_menu()
