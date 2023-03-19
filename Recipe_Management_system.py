@@ -1,8 +1,6 @@
 import random
 
 
-
-
 class Recipe:
 
     def __init__(self, id, name, ingredients, instructions, category, rating):
@@ -156,7 +154,7 @@ class RecipeManager:
         del self.recipes[recipe_index]
         return True
 
- def delete_recipe(self):
+    def delete_recipe(self):
 
         if len(self.recipes) == 0:
             raise Exception("Recipe list empty!")
@@ -187,7 +185,7 @@ class RecipeManager:
                             recipe.instructions+","+recipe.category+","+str(recipe.rating)+"\n")
         else:
             raise Exception("Only CSV files are supported")
-    
+
     def import_data(self, file_path):
         with open(file_path) as f:
             if file_path.endswith('.csv'):
