@@ -1,5 +1,5 @@
 import unittest
-from Recipe_Management_System import RecipeManager, Recipe
+from Recipe_Management_system import RecipeManager, Recipe
 
 
 
