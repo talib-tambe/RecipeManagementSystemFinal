@@ -24,10 +24,10 @@ class TestRecipeManager(unittest.TestCase):
         self.manager = RecipeManager()
         self.manager.recipes.append(test_recipe)
         self.manager.export_data(file_format='csv')
-    
+
     @patch('builtins.input', side_effect=["kunafa", "cream honey cheese sugar syrup",
-                             "1) mix evrything and boom", "dessert", "3"])
-    def test_add_recipe(self,mock_input):
+                                          "1) mix evrything and boom", "dessert", "3"])
+    def test_add_recipe(self, mock_input):
         print("")
         print("Testing Adding a Recipe")
         print("")
@@ -36,7 +36,7 @@ class TestRecipeManager(unittest.TestCase):
         self.assertEqual(len(self.manager.recipes), 1)
 
     @patch('builtins.input', side_effect=["500"])
-    def test_delete_recipe(self,mock_input):
+    def test_delete_recipe(self, mock_input):
         print("")
         print("Testing Deleting a Recipe")
         print("")
@@ -47,9 +47,9 @@ class TestRecipeManager(unittest.TestCase):
         self.manager.delete_recipe()
         self.assertEqual(len(self.manager.recipes), 0)
 
-    @patch('builtins.input', side_effect=["500","sherbet", "milk rose syrup tadpoles",
-                             "1) mix evrything and boom", "refereshener", "4"])
-    def test_edit_recipe(self,mock_input):
+    @patch('builtins.input', side_effect=["500", "sherbet", "milk rose syrup tadpoles",
+                                          "1) mix evrything and boom", "refereshener", "4"])
+    def test_edit_recipe(self, mock_input):
         print("")
         print("Testing editing a Recipe")
         print("")
@@ -59,8 +59,8 @@ class TestRecipeManager(unittest.TestCase):
         self.manager.recipes.append(test_recipe)
         self.assertTrue(self.manager.edit_recipe())
 
-    @patch('builtins.input', side_effect=["1","4","kunafa","3","dessert","2","5"])
-    def test_view_recipes_filtered_list_only(self,mock_input):
+    @patch('builtins.input', side_effect=["1", "4", "kunafa", "3", "dessert", "2", "5"])
+    def test_view_recipes_filtered_list_only(self, mock_input):
 
         print("")
         print("Testing view recipes filtered list only")
