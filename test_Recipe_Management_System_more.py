@@ -1,13 +1,14 @@
 import unittest
 from Recipe_Management_system import RecipeManager, Recipe
-
+from unittest.mock import patch
 
 
 class TestRecipeManager(unittest.TestCase):
 
     print("Second Test Recipe Management System (Testing Raising Exception Only)")
 
-    def test_add_recipe(self):
+    @patch('builtins.input', side_effect=["", "", "", "", ""])
+    def test_add_recipe(self, mock_input):
         # Let the fields remain empty for testing exception
         print("")
         print("Testing Adding a Recipe")
@@ -16,7 +17,8 @@ class TestRecipeManager(unittest.TestCase):
         with self.assertRaises(Exception):
             self.manager.add_recipe()
 
-    def test_delete_recipe(self):
+    @patch('builtins.input', side_effect=[""])
+    def test_delete_recipe(self, mock_input):
         # Trying to delete a non existent recipe
         print("")
         print("Testing Deleting a Recipe")
@@ -29,7 +31,8 @@ class TestRecipeManager(unittest.TestCase):
         with self.assertRaises(Exception):
             self.manager.delete_recipe()  # Enter ID of non existent recipe
 
-    def test_edit_recipe(self):
+    @patch('builtins.input', side_effect=["", "", "", "", "", ""])
+    def test_edit_recipe(self, mock_input):
         # Trying to update a non existent recipe
         print("")
         print("Testing updating a Recipe")
@@ -65,7 +68,8 @@ class TestRecipeManager(unittest.TestCase):
         with self.assertRaises(Exception):
             self.manager.export_data(file_format='css')
 
-    def test_view_recipes_filtered_list_only(self):
+    @patch('builtins.input', side_effect=["", "", "", "", "", "", ""])
+    def test_view_recipes_filtered_list_only(self, mock_input):
 
         print("")
         print("Testing view recipes filtered list only")
@@ -120,7 +124,6 @@ class TestRecipeManager(unittest.TestCase):
 
         with self.assertRaises(Exception):
             self.assertEqual(self.manager.view_recipe(), categoryList)
-            
 
 
 if __name__ == '__main__':
