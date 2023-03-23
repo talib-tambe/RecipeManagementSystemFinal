@@ -1,40 +1,11 @@
 import unittest
 from Recipe_Management_system import RecipeManager, Recipe
-
+from unittest.mock import patch
 
 
 class TestRecipeManager(unittest.TestCase):
 
     print("First Test Recipe Management System")
-
-    def test_add_recipe(self):
-        print("")
-        print("Testing Adding a Recipe")
-        print("")
-        self.manager = RecipeManager()
-        self.manager.add_recipe()
-        self.assertEqual(len(self.manager.recipes), 1)
-
-    def test_delete_recipe(self):
-        print("")
-        print("Testing Deleting a Recipe")
-        print("")
-        test_recipe = Recipe(500, "kunafa", "cream honey cheese sugar syrup",
-                             "1) mix evrything and boom", "dessert", "3")
-        self.manager = RecipeManager()
-        self.manager.recipes.append(test_recipe)
-        self.manager.delete_recipe()
-        self.assertEqual(len(self.manager.recipes), 0)
-
-    def test_edit_recipe(self):
-        print("")
-        print("Testing editing a Recipe")
-        print("")
-        test_recipe = Recipe(500, "kunafa", "cream honey cheese sugar syrup",
-                             "1) mix evrything and boom", "dessert", "3")
-        self.manager = RecipeManager()
-        self.manager.recipes.append(test_recipe)
-        self.assertTrue(self.manager.edit_recipe())
 
     def test_import_recipe(self):
         print("")
@@ -53,8 +24,43 @@ class TestRecipeManager(unittest.TestCase):
         self.manager = RecipeManager()
         self.manager.recipes.append(test_recipe)
         self.manager.export_data(file_format='csv')
+    
+    @patch('builtins.input', side_effect=["kunafa", "cream honey cheese sugar syrup",
+                             "1) mix evrything and boom", "dessert", "3"])
+    def test_add_recipe(self,mock_input):
+        print("")
+        print("Testing Adding a Recipe")
+        print("")
+        self.manager = RecipeManager()
+        self.manager.add_recipe()
+        self.assertEqual(len(self.manager.recipes), 1)
 
-    def test_view_recipes_filtered_list_only(self):
+    @patch('builtins.input', side_effect=["500"])
+    def test_delete_recipe(self,mock_input):
+        print("")
+        print("Testing Deleting a Recipe")
+        print("")
+        test_recipe = Recipe(500, "kunafa", "cream honey cheese sugar syrup",
+                             "1) mix evrything and boom", "dessert", "3")
+        self.manager = RecipeManager()
+        self.manager.recipes.append(test_recipe)
+        self.manager.delete_recipe()
+        self.assertEqual(len(self.manager.recipes), 0)
+
+    @patch('builtins.input', side_effect=["500","sherbet", "milk rose syrup tadpoles",
+                             "1) mix evrything and boom", "refereshener", "4"])
+    def test_edit_recipe(self,mock_input):
+        print("")
+        print("Testing editing a Recipe")
+        print("")
+        test_recipe = Recipe(500, "kunafa", "cream honey cheese sugar syrup",
+                             "1) mix evrything and boom", "dessert", "3")
+        self.manager = RecipeManager()
+        self.manager.recipes.append(test_recipe)
+        self.assertTrue(self.manager.edit_recipe())
+
+    @patch('builtins.input', side_effect=["1","4","kunafa","3","dessert","2","5"])
+    def test_view_recipes_filtered_list_only(self,mock_input):
 
         print("")
         print("Testing view recipes filtered list only")
